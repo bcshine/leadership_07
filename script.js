@@ -1,6 +1,6 @@
-// Vessel API 설정
-const VESSEL_API_URL = "https://api.vessel.example.com";
-const VESSEL_API_KEY = "YOUR_VESSEL_API_KEY";
+// Vercel API 설정
+const VERCEL_API_URL = "http://localhost:3000"; // 로컬 서버 URL로 변경
+const VERCEL_API_KEY = "YOUR_VERCEL_API_KEY";
 const GEMINI_API_KEY = "AIzaSyALAtfDLhrBb6SPpDwZoTtO2wUHi4vvgcA";
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -170,58 +170,44 @@ document.addEventListener('DOMContentLoaded', function() {
         // 로딩 메시지 표시
         const loadingMsg = addMessage('응답을 생성 중입니다...', 'bot');
         
-        try {
-            // Vessel API 호출
-            getResponseFromVessel(message)
-                .then(response => {
-                    loadingMsg.textContent = response;
-                    
-                    setTimeout(() => {
-                        addMessage("더 구체적인 도움이 필요하시면 아래 \"다른 고민 보기\" 버튼을 눌러 주요 고민 사항을 선택해주세요.", 'bot');
-                    }, 1000);
-                })
-                .catch(error => {
-                    console.error('응답 처리 오류:', error);
-                    loadingMsg.textContent = '죄송합니다. 응답을 생성하는 중 오류가 발생했습니다.';
-                    
-                    setTimeout(() => {
-                        addMessage("더 구체적인 도움이 필요하시면 아래 \"다른 고민 보기\" 버튼을 눌러 주요 고민 사항을 선택해주세요.", 'bot');
-                    }, 1000);
-                });
-        } catch (error) {
-            console.error('응답 처리 오류:', error);
-            loadingMsg.textContent = '죄송합니다. 응답을 생성하는 중 오류가 발생했습니다.';
-            
-            setTimeout(() => {
-                addMessage("더 구체적인 도움이 필요하시면 아래 \"다른 고민 보기\" 버튼을 눌러 주요 고민 사항을 선택해주세요.", 'bot');
-            }, 1000);
-        }
+        // Vercel 서버로 사용자 입력 전송
+        sendToVercelServer(message)
+            .then(response => {
+                // 서버로부터 받은 응답 표시
+                loadingMsg.textContent = response;
+                
+                setTimeout(() => {
+                    addMessage("더 구체적인 도움이 필요하시면 아래 \"다른 고민 보기\" 버튼을 눌러 주요 고민 사항을 선택해주세요.", 'bot');
+                }, 1000);
+            })
+            .catch(error => {
+                console.error('응답 처리 오류:', error);
+                loadingMsg.textContent = '죄송합니다. 응답을 생성하는 중 오류가 발생했습니다.';
+                
+                setTimeout(() => {
+                    addMessage("더 구체적인 도움이 필요하시면 아래 \"다른 고민 보기\" 버튼을 눌러 주요 고민 사항을 선택해주세요.", 'bot');
+                }, 1000);
+            });
     }
     
-    // Vessel API 호출 함수
-    async function getResponseFromVessel(message) {
-        console.log('Vessel API 호출 시도:', message);
+    // Vercel 서버에 메시지 전송 함수
+    async function sendToVercelServer(message) {
+        console.log('Vercel 서버로 메시지 전송:', message);
         
         try {
             // API URL 설정
-            const apiUrl = `${VESSEL_API_URL}/api/chat`;
+            const apiUrl = `${VERCEL_API_URL}/api/chat`;
             
-            // 페이로드 준비
+            // 페이로드 준비 - 서버에서 필요로 하는 형식으로 구성
             const payload = {
-                message: message,
-                context: '리더십 전문가로서 한국어로 상세하고 실용적인 조언 제공'
+                message: message // 서버는 이 메시지를 받아 OpenAI에 전달합니다
             };
             
-            // 현재는 로컬 응답 사용
-            console.log('현재 Vessel API가 준비되지 않아 로컬 응답으로 대체합니다.');
-            return fallbackToLocalResponse(message);
-            
-            /* 실제 API 호출 코드 (구현 후 주석 해제)
+            // 서버 API 호출
             const response = await fetch(apiUrl, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${VESSEL_API_KEY}`
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(payload)
             });
@@ -233,13 +219,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const data = await response.json();
             
             if (data.success && data.text) {
+                console.log('OpenAI로부터 응답 수신:', data.text.substring(0, 50) + '...');
                 return data.text;
             } else {
+                console.error('서버 응답 형식 오류:', data);
                 throw new Error('API 응답에서 텍스트를 찾을 수 없습니다.');
             }
-            */
         } catch (error) {
-            console.error('Vessel API 호출 오류:', error);
+            console.error('서버 API 호출 오류:', error);
             return fallbackToLocalResponse(message);
         }
     }
@@ -525,32 +512,23 @@ document.addEventListener('DOMContentLoaded', function() {
         // 로딩 메시지 표시
         const loadingMessage = addMessage('답변을 생성하고 있습니다...', 'bot');
         
-        try {
-            // Vessel API 호출
-            getResponseFromVessel(optionText)
-                .then(response => {
-                    loadingMessage.textContent = response;
-                    
-                    setTimeout(() => {
-                        addMessage("더 궁금하신 점이 있으면 언제든지 질문해주세요.", 'bot');
-                    }, 1000);
-                })
-                .catch(error => {
-                    console.error('API 응답 처리 오류:', error);
-                    loadingMessage.textContent = '죄송합니다. 응답을 생성하는 중 오류가 발생했습니다.';
-                    
-                    setTimeout(() => {
-                        addMessage("더 궁금하신 점이 있으면 언제든지 질문해주세요.", 'bot');
-                    }, 1000);
-                });
-        } catch (error) {
-            console.error('응답 처리 오류:', error);
-            loadingMessage.textContent = '죄송합니다. 응답을 생성하는 중 오류가 발생했습니다.';
-            
-            setTimeout(() => {
-                addMessage("더 궁금하신 점이 있으면 언제든지 질문해주세요.", 'bot');
-            }, 1000);
-        }
+        // Vercel 서버로 사용자 선택 전송
+        sendToVercelServer(optionText)
+            .then(response => {
+                loadingMessage.textContent = response;
+                
+                setTimeout(() => {
+                    addMessage("더 궁금하신 점이 있으면 언제든지 질문해주세요.", 'bot');
+                }, 1000);
+            })
+            .catch(error => {
+                console.error('API 응답 처리 오류:', error);
+                loadingMessage.textContent = '죄송합니다. 응답을 생성하는 중 오류가 발생했습니다.';
+                
+                setTimeout(() => {
+                    addMessage("더 궁금하신 점이 있으면 언제든지 질문해주세요.", 'bot');
+                }, 1000);
+            });
     }
     
     // 고민 선택기 보여주기
