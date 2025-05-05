@@ -172,9 +172,15 @@ app.get('/api-test', (req, res) => {
   res.sendFile(path.join(__dirname, 'api-test.html'));
 });
 
+// 새로운 간단한 API 테스트 페이지 라우트
+app.get('/api-test-simple', (req, res) => {
+  res.sendFile(path.join(__dirname, 'api-test-simple.html'));
+});
+
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`서버가 포트 ${port}에서 실행 중입니다`);
   console.log(`웹 브라우저에서 http://localhost:${port} 로 접속하세요`);
   console.log(`API 테스트: http://localhost:${port}/api-test`);
+  console.log(`간단한 API 테스트: http://localhost:${port}/api-test-simple`);
 }); 

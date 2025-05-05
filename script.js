@@ -4,6 +4,19 @@
 const VERCEL_API_KEY = "YOUR_VERCEL_API_KEY";
 const GEMINI_API_KEY = "AIzaSyALAtfDLhrBb6SPpDwZoTtO2wUHi4vvgcA";
 
+// Vercel 환경 감지 및 API 경로 설정
+function isVercelProduction() {
+    // Vercel 프로덕션 환경에서는 hostname에 vercel.app이 포함됨
+    return window.location.hostname.includes('vercel.app');
+}
+
+// API 경로를 가져오는 함수
+function getApiPath(endpoint) {
+    // Vercel 프로덕션 환경에서는 /api 접두사를 추가
+    const isVercel = isVercelProduction();
+    return isVercel ? `/api${endpoint}` : endpoint;
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Document loaded, initializing scripts...');
     
@@ -199,7 +212,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // 현재 웹사이트 도메인 기반으로 API URL 설정
             // 이렇게 하면 어떤 환경(로컬호스트, Vercel 등)에서도 현재 도메인을 기준으로 요청이 전송됨
             const baseUrl = window.location.origin;
-            const apiUrl = `${baseUrl}/chat`;
+            const chatEndpoint = getApiPath('/chat'); // API 경로 설정
+            const apiUrl = `${baseUrl}${chatEndpoint}`;
             
             console.log('API 요청 URL:', apiUrl);
             

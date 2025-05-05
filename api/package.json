@@ -1,0 +1,9 @@
+{
+  "name": "leadership-coach-api",
+  "version": "1.0.0",
+  "description": "리더십 코치 API 함수",
+  "main": "index.js",
+  "dependencies": {
+    "axios": "^1.6.2"
+  }
+} 

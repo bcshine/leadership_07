@@ -1,0 +1,59 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "server.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "api/**/*.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/check-env",
+      "dest": "/api/check-env.js"
+    },
+    {
+      "src": "/api/server-status",
+      "dest": "/api/server-status.js"
+    },
+    {
+      "src": "/api/test-openai",
+      "dest": "/api/test-openai.js"
+    },
+    {
+      "src": "/api/chat",
+      "dest": "/api/chat.js"
+    },
+    {
+      "src": "/check-env",
+      "dest": "/server.js"
+    },
+    {
+      "src": "/server-status",
+      "dest": "/server.js"
+    },
+    {
+      "src": "/test-openai",
+      "dest": "/server.js"
+    },
+    {
+      "src": "/chat",
+      "dest": "/server.js"
+    },
+    {
+      "src": "/api-test",
+      "dest": "/server.js"
+    },
+    {
+      "src": "/api-test-simple",
+      "dest": "/server.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/server.js"
+    }
+  ]
+} 
