@@ -1,5 +1,6 @@
 // Vercel API 설정
-const VERCEL_API_URL = "http://localhost:3000"; // 로컬 서버 URL로 변경
+// 상대 경로를 사용하도록 변경
+// const VERCEL_API_URL = "http://localhost:3000"; // 더 이상 사용하지 않음
 const VERCEL_API_KEY = "YOUR_VERCEL_API_KEY";
 const GEMINI_API_KEY = "AIzaSyALAtfDLhrBb6SPpDwZoTtO2wUHi4vvgcA";
 
@@ -192,11 +193,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Vercel 서버에 메시지 전송 함수
     async function sendToVercelServer(message) {
-        console.log('Vercel 서버로 메시지 전송:', message);
+        console.log('서버로 메시지 전송:', message);
         
         try {
-            // API URL 설정
-            const apiUrl = `${VERCEL_API_URL}/api/chat`;
+            // 상대 경로를 사용하여 API URL 설정
+            const apiUrl = `/chat`;
             
             // 페이로드 준비 - 서버에서 필요로 하는 형식으로 구성
             const payload = {
@@ -512,7 +513,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // 로딩 메시지 표시
         const loadingMessage = addMessage('답변을 생성하고 있습니다...', 'bot');
         
-        // Vercel 서버로 사용자 선택 전송
+        // 서버로 사용자 선택 전송 (상대 경로 사용)
         sendToVercelServer(optionText)
             .then(response => {
                 loadingMessage.textContent = response;
@@ -783,7 +784,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 },
                 {
                     title: "코치형 리더십",
-                    description: `코치형 리더는 팀원의 성장과 잠재력 개발에 초점을 맞추는 영감을 주는 멘토입니다. 이들은 개개인의 강점을 파악하고 발전시키며, 자율성과 책임감을 부여하여 주도적으로 성장할 수 있도록 돕습니다.`,
+                    description: `코치형 리더는 팀원의 성장과 잠재력 개발에 초점을 맞추는 영감을 주는 멘토입니다. 이들은 개개인의 강점을 파악하고 발전시키며, 자율성과 주인의식 부여를 통한 내적 동기를 유발합니다.`,
                     strengths: "• 팀원의 잠재력과 강점 발견 및 개발 능력\n• 자율성과 주인의식 부여를 통한 내적 동기 유발",
                     weaknesses: "• 모든 상황에 코칭 접근법이 적합하지 않을 수 있음\n• 단기적 성과가 필요한 상황에서 시간 소요"
                 },

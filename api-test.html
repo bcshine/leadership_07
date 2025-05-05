@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API 연결 테스트</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+        }
+        .success {
+            background-color: #dff0d8;
+            color: #3c763d;
+        }
+        .error {
+            background-color: #f2dede;
+            color: #a94442;
+        }
+    </style>
+</head>
+<body>
+    <h1>API 연결 테스트</h1>
+    
+    <div class="card">
+        <h2>1. 환경 변수 확인</h2>
+        <button id="check-env">환경 변수 확인</button>
+        <div id="env-result" class="result">결과가 여기에 표시됩니다.</div>
+    </div>
+    
+    <div class="card">
+        <h2>2. OpenAI API 연결 테스트</h2>
+        <button id="test-openai">OpenAI API 테스트</button>
+        <div id="openai-result" class="result">결과가 여기에 표시됩니다.</div>
+    </div>
+    
+    <div class="card">
+        <h2>3. 서버 상태 확인</h2>
+        <button id="check-server">서버 상태 확인</button>
+        <div id="server-result" class="result">결과가 여기에 표시됩니다.</div>
+    </div>
+
+    <script>
+        // 환경 변수 확인
+        document.getElementById('check-env').addEventListener('click', async () => {
+            const resultElement = document.getElementById('env-result');
+            resultElement.className = 'result';
+            resultElement.textContent = '환경 변수 확인 중...';
+            
+            try {
+                const response = await fetch('/check-env');
+                const data = await response.json();
+                
+                if (data.success) {
+                    resultElement.className = 'result success';
+                    resultElement.textContent = `OPENAI_API_KEY 설정됨: ${data.hasApiKey}\n`;
+                    resultElement.textContent += `NODE_ENV: ${data.nodeEnv}\n`;
+                    resultElement.textContent += `기타 환경 변수: ${JSON.stringify(data.envVars, null, 2)}`;
+                } else {
+                    resultElement.className = 'result error';
+                    resultElement.textContent = `오류: ${data.error}`;
+                }
+            } catch (error) {
+                resultElement.className = 'result error';
+                resultElement.textContent = `요청 실패: ${error.message}\n서버가 실행 중인지 확인하세요.`;
+            }
+        });
+        
+        // OpenAI API 테스트
+        document.getElementById('test-openai').addEventListener('click', async () => {
+            const resultElement = document.getElementById('openai-result');
+            resultElement.className = 'result';
+            resultElement.textContent = 'OpenAI API 테스트 중...';
+            
+            try {
+                const response = await fetch('/test-openai', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ message: 'API 테스트입니다.' })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    resultElement.className = 'result success';
+                    resultElement.textContent = `성공!\nOpenAI 응답: ${data.text}\n\n상세 정보: ${JSON.stringify(data.data, null, 2)}`;
+                } else {
+                    resultElement.className = 'result error';
+                    resultElement.textContent = `오류: ${data.error}\n\n상세 정보: ${JSON.stringify(data.details || {}, null, 2)}`;
+                }
+            } catch (error) {
+                resultElement.className = 'result error';
+                resultElement.textContent = `요청 실패: ${error.message}\n서버가 실행 중인지 확인하세요.`;
+            }
+        });
+        
+        // 서버 상태 확인
+        document.getElementById('check-server').addEventListener('click', async () => {
+            const resultElement = document.getElementById('server-result');
+            resultElement.className = 'result';
+            resultElement.textContent = '서버 상태 확인 중...';
+            
+            try {
+                const response = await fetch('/server-status');
+                const data = await response.json();
+                
+                if (data.success) {
+                    resultElement.className = 'result success';
+                    resultElement.textContent = `서버 상태: ${data.status}\n서버 시간: ${data.serverTime}\n서버 환경: ${data.environment}`;
+                } else {
+                    resultElement.className = 'result error';
+                    resultElement.textContent = `오류: ${data.error}`;
+                }
+            } catch (error) {
+                resultElement.className = 'result error';
+                resultElement.textContent = `요청 실패: ${error.message}\n서버가 실행 중인지 확인하세요.`;
+            }
+        });
+    </script>
+</body>
+</html> 
