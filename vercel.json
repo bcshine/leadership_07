@@ -12,6 +12,14 @@
   ],
   "routes": [
     {
+      "src": "/api-test-simple",
+      "dest": "/api-test-simple.html"
+    },
+    {
+      "src": "/api-test",
+      "dest": "/api-test.html"
+    },
+    {
       "src": "/api/check-env",
       "dest": "/api/check-env.js"
     },
@@ -41,14 +49,6 @@
     },
     {
       "src": "/chat",
-      "dest": "/server.js"
-    },
-    {
-      "src": "/api-test",
-      "dest": "/server.js"
-    },
-    {
-      "src": "/api-test-simple",
       "dest": "/server.js"
     },
     {

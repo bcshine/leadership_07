@@ -7,18 +7,24 @@ const GEMINI_API_KEY = "AIzaSyALAtfDLhrBb6SPpDwZoTtO2wUHi4vvgcA";
 // Vercel 환경 감지 및 API 경로 설정
 function isVercelProduction() {
     // Vercel 프로덕션 환경에서는 hostname에 vercel.app이 포함됨
-    return window.location.hostname.includes('vercel.app');
+    const isVercel = window.location.hostname.includes('vercel.app');
+    console.log('Current hostname:', window.location.hostname);
+    console.log('Is Vercel environment:', isVercel);
+    return isVercel;
 }
 
 // API 경로를 가져오는 함수
 function getApiPath(endpoint) {
     // Vercel 프로덕션 환경에서는 /api 접두사를 추가
     const isVercel = isVercelProduction();
-    return isVercel ? `/api${endpoint}` : endpoint;
+    const apiPath = isVercel ? `/api${endpoint}` : endpoint;
+    console.log(`API path for ${endpoint}:`, apiPath);
+    return apiPath;
 }
 
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Document loaded, initializing scripts...');
+    console.log('Current URL:', window.location.href);
     
     // 요소 참조
     const elements = {
@@ -207,6 +213,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Vercel 서버에 메시지 전송 함수
     async function sendToVercelServer(message) {
         console.log('서버로 메시지 전송:', message);
+        console.log('현재 호스트네임:', window.location.hostname);
+        console.log('Vercel 환경 감지:', isVercelProduction());
         
         try {
             // 현재 웹사이트 도메인 기반으로 API URL 설정
@@ -215,12 +223,17 @@ document.addEventListener('DOMContentLoaded', function() {
             const chatEndpoint = getApiPath('/chat'); // API 경로 설정
             const apiUrl = `${baseUrl}${chatEndpoint}`;
             
-            console.log('API 요청 URL:', apiUrl);
+            console.log('API 요청 설정:');
+            console.log('- 기본 URL:', baseUrl);
+            console.log('- 채팅 엔드포인트:', chatEndpoint);
+            console.log('- 최종 API URL:', apiUrl);
             
             // 페이로드 준비 - 서버에서 필요로 하는 형식으로 구성
             const payload = {
                 message: message // 서버는 이 메시지를 받아 OpenAI에 전달합니다
             };
+            
+            console.log('API 요청 시작...');
             
             // 서버 API 호출
             const response = await fetch(apiUrl, {
@@ -231,11 +244,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 body: JSON.stringify(payload)
             });
             
+            console.log('API 응답 상태:', response.status, response.statusText);
+            
             if (!response.ok) {
-                throw new Error(`API 호출 실패: ${response.status}`);
+                throw new Error(`API 호출 실패: ${response.status} ${response.statusText}`);
             }
             
             const data = await response.json();
+            console.log('API 응답 데이터:', data);
             
             if (data.success && data.text) {
                 console.log('OpenAI로부터 응답 수신:', data.text.substring(0, 50) + '...');
@@ -245,7 +261,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 throw new Error('API 응답에서 텍스트를 찾을 수 없습니다.');
             }
         } catch (error) {
-            console.error('서버 API 호출 오류:', error);
+            console.error('서버 API 호출 오류:', error.message);
             return fallbackToLocalResponse(message);
         }
     }

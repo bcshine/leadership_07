@@ -73,10 +73,23 @@
         .toggle-btn:hover {
             background-color: #286090;
         }
+        .debug-info {
+            background-color: #fffbe6;
+            color: #856404;
+            font-family: monospace;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            border: 1px solid #ffeeba;
+        }
     </style>
 </head>
 <body>
     <h1>간단한 API 테스트</h1>
+    
+    <div class="debug-info" id="debug-info">
+        환경 정보 로딩 중...
+    </div>
     
     <div class="info" id="domain-info">
         현재 도메인 정보 로딩 중...
@@ -117,26 +130,43 @@
 
     <script>
         // Vercel 환경에서는 기본적으로 API 접두사를 사용하도록 설정
-        let useApiPrefix = window.location.hostname.includes('vercel.app');
+        const isVercelEnv = window.location.hostname.includes('vercel.app');
+        console.log('Current hostname:', window.location.hostname);
+        console.log('Is Vercel environment:', isVercelEnv);
+        
+        let useApiPrefix = isVercelEnv;
         
         // API 경로 접두사 전환 버튼
         document.getElementById('toggle-api-prefix').addEventListener('click', function() {
             useApiPrefix = !useApiPrefix;
             this.textContent = `API 접두사 전환: 현재 ${useApiPrefix ? '/api' : '없음'}`;
+            console.log('API prefix toggled:', useApiPrefix ? '/api' : 'none');
             updateDomainInfo();
         });
         
         // API 경로 가져오기 함수
         function getApiPath(endpoint) {
-            return useApiPrefix ? `/api${endpoint}` : endpoint;
+            const apiPath = useApiPrefix ? `/api${endpoint}` : endpoint;
+            console.log(`API path for ${endpoint}:`, apiPath);
+            return apiPath;
         }
         
         // 페이지 로드 시 현재 도메인 정보 표시
         function updateDomainInfo() {
             const domainInfo = document.getElementById('domain-info');
+            const debugInfo = document.getElementById('debug-info');
             const currentDomain = window.location.origin;
             const currentPath = window.location.pathname;
             const prefix = useApiPrefix ? '/api' : '';
+            
+            // 디버그 정보 표시
+            debugInfo.innerHTML = `
+                <strong>환경 정보:</strong><br>
+                <strong>호스트네임:</strong> ${window.location.hostname}<br>
+                <strong>Vercel 환경 감지:</strong> ${isVercelEnv ? '예' : '아니오'}<br>
+                <strong>API 접두사 사용:</strong> ${useApiPrefix ? '예 (/api)' : '아니오'}<br>
+                <strong>전체 URL:</strong> ${window.location.href}
+            `;
             
             domainInfo.innerHTML = `
                 <strong>현재 도메인:</strong> ${currentDomain}<br>
@@ -149,7 +179,10 @@
             `;
         }
         
-        document.addEventListener('DOMContentLoaded', updateDomainInfo);
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDomainInfo();
+            console.log('Domain info updated on page load');
+        });
 
         // 서버 상태 확인
         document.getElementById('test-server').addEventListener('click', async () => {
