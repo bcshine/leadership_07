@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+  <style>
+    .text { font-family: Arial, sans-serif; font-weight: bold; }
+    .text-large { font-size: 24px; }
+    .text-small { font-size: 12px; }
+    .mountain { fill: #3498db; }
+    .circle { fill: #fff; stroke: #3498db; stroke-width: 8; }
+  </style>
+  
+  <!-- Background Circle -->
+  <circle cx="100" cy="100" r="90" class="circle" />
+  
+  <!-- Mountain Symbol -->
+  <path d="M50,130 L100,60 L150,130 Z" class="mountain" />
+  <path d="M70,130 L100,80 L130,130 Z" fill="#2980b9" />
+  
+  <!-- Text -->
+  <text x="100" y="160" text-anchor="middle" class="text text-large" fill="#333">중간계</text>
+  <text x="100" y="180" text-anchor="middle" class="text text-small" fill="#333">리더십 캠퍼스</text>
+</svg> 

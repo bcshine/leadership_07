@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API 테스트</title>
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            margin: 10px 0;
+            padding: 10px;
+        }
+        #result {
+            white-space: pre-wrap;
+            border: 1px solid #ddd;
+            padding: 10px;
+            background-color: #f9f9f9;
+            min-height: 200px;
+            margin-top: 20px;
+        }
+        .log {
+            font-family: monospace;
+            font-size: 12px;
+            margin-top: 10px;
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 4px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>API 테스트</h1>
+    
+    <div>
+        <h2>Ping 테스트</h2>
+        <button id="ping-btn">Ping 테스트</button>
+        <div id="ping-result" class="log"></div>
+    </div>
+    
+    <div>
+        <h2>Gemini API 테스트</h2>
+        <textarea id="message" placeholder="메시지를 입력하세요...">리더십이란 무엇인가요?</textarea>
+        <button id="api-btn-1">Cloud Run URL로 테스트</button>
+        <button id="api-btn-2">Firebase URL로 테스트</button>
+        <div id="api-result" class="log"></div>
+        <h3>응답:</h3>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        // Ping 테스트
+        document.getElementById('ping-btn').addEventListener('click', async function() {
+            const pingLog = document.getElementById('ping-result');
+            pingLog.innerHTML = '테스트 중...\n';
+            
+            try {
+                const pingUrl = 'https://ping-ocfafismkq-uc.a.run.app';
+                pingLog.innerHTML += `URL: ${pingUrl}\n`;
+                
+                const response = await fetch(pingUrl);
+                pingLog.innerHTML += `상태: ${response.status} ${response.statusText}\n`;
+                
+                const data = await response.json();
+                pingLog.innerHTML += `응답: ${JSON.stringify(data, null, 2)}\n`;
+            } catch (error) {
+                pingLog.innerHTML += `오류: ${error.message}\n`;
+            }
+        });
+        
+        // API 테스트 1 - Cloud Run URL
+        document.getElementById('api-btn-1').addEventListener('click', async function() {
+            await testApi('https://callgeminiapi-ocfafismkq-uc.a.run.app');
+        });
+        
+        // API 테스트 2 - Firebase URL
+        document.getElementById('api-btn-2').addEventListener('click', async function() {
+            await testApi('https://us-central1-leadership-chatbot.cloudfunctions.net/callGeminiApi');
+        });
+        
+        // API 테스트 함수
+        async function testApi(url) {
+            const message = document.getElementById('message').value;
+            const apiLog = document.getElementById('api-result');
+            const resultDiv = document.getElementById('result');
+            
+            apiLog.innerHTML = '테스트 중...\n';
+            apiLog.innerHTML += `URL: ${url}\n`;
+            apiLog.innerHTML += `메시지: ${message}\n`;
+            
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ message: message })
+                });
+                
+                apiLog.innerHTML += `상태: ${response.status} ${response.statusText}\n`;
+                
+                const responseText = await response.text();
+                apiLog.innerHTML += `원본 응답: ${responseText.slice(0, 100)}...\n`;
+                
+                try {
+                    const data = JSON.parse(responseText);
+                    apiLog.innerHTML += `파싱된 응답: ${JSON.stringify(data, null, 2).slice(0, 100)}...\n`;
+                    
+                    if (data.success && data.text) {
+                        resultDiv.textContent = data.text;
+                        apiLog.innerHTML += '성공!\n';
+                    } else {
+                        resultDiv.textContent = '응답에서 텍스트를 찾을 수 없습니다.';
+                        apiLog.innerHTML += '응답에서 텍스트를 찾을 수 없습니다.\n';
+                    }
+                } catch (parseError) {
+                    apiLog.innerHTML += `JSON 파싱 오류: ${parseError.message}\n`;
+                    resultDiv.textContent = 'JSON 파싱 오류';
+                }
+            } catch (error) {
+                apiLog.innerHTML += `네트워크 오류: ${error.message}\n`;
+                resultDiv.textContent = `오류: ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html> 

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이기적형 직원 스타일 - 중간계 리더십 실전코스</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .employee-detail-page {
+            padding: 30px 0;
+        }
+        .employee-detail-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        .employee-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .employee-title h1 {
+            font-size: 28px;
+            margin-right: 10px;
+        }
+        .employee-title span {
+            font-size: 36px;
+        }
+        .detail-content {
+            margin-bottom: 30px;
+        }
+        .detail-section {
+            margin-bottom: 20px;
+        }
+        .detail-section h2 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: #2180de;
+            border-bottom: 2px solid #2180de;
+            padding-bottom: 5px;
+        }
+        .detail-section p {
+            line-height: 1.6;
+        }
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #2180de;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .back-btn:hover {
+            background-color: #1a6eb8;
+        }
+    </style>
+</head>
+<body>
+    <!-- 네비게이션바 -->
+    <nav id="navbar">
+        <div class="container">
+            <div class="logo">
+                <img src="../images/logo/logo_only3.png" alt="중간계캠퍼스 로고">
+            </div>
+            <div class="title">
+                <h1>중간계 리더십 실전코스 (25년)</h1>
+            </div>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../index.html#main-banner">홈</a></li>
+                <li><a href="../index.html#leadership-type">리더십 유형</a></li>
+                <li><a href="../index.html#employee-style">직원 스타일</a></li>
+                <li><a href="../index.html#contact">연락처</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 직원 상세 정보 -->
+    <section class="employee-detail-page">
+        <div class="container">
+            <div class="employee-detail-container">
+                <div class="employee-title">
+                    <h1>이기적형</h1>
+                    <span>🤳</span>
+                </div>
+                
+                <div class="detail-content">
+                    <div class="detail-section">
+                        <h2>특성</h2>
+                        <p>팀보다 자신의 이익과 편의를 우선시하며, 책임은 회피하고 권리만 주장하는 경향.</p>
+                    </div>
+                    
+                    <div class="detail-section">
+                        <h2>장점</h2>
+                        <p>자기 보호 능력이 뛰어나고 협상력이 좋을 수 있음.</p>
+                    </div>
+                    
+                    <div class="detail-section">
+                        <h2>단점</h2>
+                        <p>팀워크 저해, 불신 조성, 조직문화 악화.</p>
+                    </div>
+                    
+                    <div class="detail-section">
+                        <h2>개선점</h2>
+                        <p>개인의 성과와 팀의 성과를 연결하고, 이기적 행동의 부정적 영향을 직접 경험하게 함.</p>
+                    </div>
+                    
+                    <div class="detail-section">
+                        <h2>추천하는 대화법</h2>
+                        <p>"팀의 성공이 개인의 성공으로 이어집니다. 협력을 통해 얻을 수 있는 장기적 이익을 생각해봅시다."</p>
+                    </div>
+                    
+                    <div class="detail-section">
+                        <h2>대처법</h2>
+                        <p>팀 목표와 개인 목표를 명확히 연계하고, 팀 기여도를 평가 기준에 명확히 포함시킴. 협력적 행동에 대한 보상 체계를 강화하고, 이기적 행동의 부정적 결과를 경험하게 함.</p>
+                    </div>
+                </div>
+                
+                <a href="javascript:history.back()" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> 이전으로 돌아가기
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // 모바일 메뉴 토글
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navMenu = document.querySelector('.nav-menu');
+
+            menuToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+            });
+
+            // 네비게이션 메뉴 항목 클릭 시 모바일 메뉴 닫기
+            const navLinks = document.querySelectorAll('.nav-menu a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth <= 992) {
+                        navMenu.classList.remove('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

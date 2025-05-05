@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>은근한 반항형 직원 스타일 - 중간계 리더십 실전코스</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .employee-detail-page {
+            padding: 30px 0;
+        }
+        .employee-detail-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        .employee-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .employee-title h1 {
+            font-size: 28px;
+            margin-right: 10px;
+        }
+        .employee-title span {
+            font-size: 36px;
+        }
+        .detail-content {
+            margin-bottom: 30px;
+        }
+        .detail-section {
+            margin-bottom: 20px;
+        }
+        .detail-section h2 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: #2180de;
+            border-bottom: 2px solid #2180de;
+            padding-bottom: 5px;
+        }
+        .detail-section p {
+            line-height: 1.6;
+        }
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #2180de;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .back-btn:hover {
+            background-color: #1a6eb8;
+        }
+    </style>
+</head>
+<body>
+    <!-- 네비게이션바 -->
+    <nav id="navbar">
+        <div class="container">
+            <div class="logo">
+                <img src="../images/logo/logo_only3.png" alt="중간계캠퍼스 로고">
+            </div>
+            <div class="title">
+                <h1>중간계 리더십 실전코스 (25년)</h1>
+            </div>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../index.html#main-banner">홈</a></li>
+                <li><a href="../index.html#leadership-type">리더십 유형</a></li>
+                <li><a href="../index.html#employee-style">직원 스타일</a></li>
+                <li><a href="../index.html#contact">연락처</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 직원 상세 정보 -->
+    <section class="employee-detail-page">
+        <div class="container">
+            <div class="employee-detail-container">
+                <div class="employee-title">
+                    <h1>은근한 반항형</h1>
+                    <span>😏</span>
+                </div>
+                
+                <div class="detail-content">
+                    <div class="detail-section">
+                        <h2>특성</h2>
+                        <p>겉으로는 '네'라고 하지만 지시사항을 소극적으로 수행하거나 왜곡해 실행.</p>
+                    </div>
+                    
+                    <div class="detail-section">
+                        <h2>장점</h2>
+                        <p>조직에 필요한 비판적 사고를 지니고 있을 가능성 있음.</p>
+                    </div>
+                    
+                    <div class="detail-section">
+                        <h2>단점</h2>
+                        <p>명령 불이행, 업무 지연, 리더십 약화 초래.</p>
+                    </div>
+                    
+                    <div class="detail-section">
+                        <h2>개선점</h2>
+                        <p>업무 지시를 명확하고 구체적으로 전달하고, 결과를 수치적으로 관리.</p>
+                    </div>
+                    
+                    <div class="detail-section">
+                        <h2>추천하는 대화법</h2>
+                        <p>"당신의 생각을 듣는 것도 중요하지만, 일단 합의된 업무는 정확하게 빠르게 진행해야 합니다. 나중에 개선 의견은 별도로 받을게요."</p>
+                    </div>
+                    
+                    <div class="detail-section">
+                        <h2>대처법</h2>
+                        <p>업무 지시를 문서화하고, 체크리스트와 수치 기준으로 진행 상황 관리.
+반복적 반항 시에는 공식 경고를 주고, 최악의 경우 교체를 고려.</p>
+                    </div>
+                </div>
+                
+                <a href="javascript:history.back()" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> 이전으로 돌아가기
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // 모바일 메뉴 토글
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navMenu = document.querySelector('.nav-menu');
+
+            menuToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+            });
+
+            // 네비게이션 메뉴 항목 클릭 시 모바일 메뉴 닫기
+            const navLinks = document.querySelectorAll('.nav-menu a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth <= 992) {
+                        navMenu.classList.remove('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

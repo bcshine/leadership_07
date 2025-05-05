@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관심 요구형 직원 스타일 - 중간계 리더십 실전코스</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .employee-detail-page {
+            padding: 30px 0;
+        }
+        .employee-detail-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        .employee-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .employee-title h1 {
+            font-size: 28px;
+            margin-right: 10px;
+        }
+        .employee-title span {
+            font-size: 36px;
+        }
+        .detail-content {
+            margin-bottom: 30px;
+        }
+        .detail-section {
+            margin-bottom: 20px;
+        }
+        .detail-section h2 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: #2180de;
+            border-bottom: 2px solid #2180de;
+            padding-bottom: 5px;
+        }
+        .detail-section p {
+            line-height: 1.6;
+        }
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #2180de;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .back-btn:hover {
+            background-color: #1a6eb8;
+        }
+    </style>
+</head>
+<body>
+    <!-- 네비게이션바 -->
+    <nav id="navbar">
+        <div class="container">
+            <div class="logo">
+                <img src="../images/logo/logo_only3.png" alt="중간계캠퍼스 로고">
+            </div>
+            <div class="title">
+                <h1>중간계 리더십 실전코스 (25년)</h1>
+            </div>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../index.html#main-banner">홈</a></li>
+                <li><a href="../index.html#leadership-type">리더십 유형</a></li>
+                <li><a href="../index.html#employee-style">직원 스타일</a></li>
+                <li><a href="../index.html#contact">연락처</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 직원 상세 정보 -->
+    <section class="employee-detail-page">
+        <div class="container">
+            <div class="employee-detail-container">
+                <div class="employee-title">
+                    <h1>관심 요구형</h1>
+                    <span>🔍</span>
+                </div>
+                
+                <div class="detail-content">
+                    <div class="detail-section">
+                        <h2>특성</h2>
+                        <p>작은 성과에도 과도한 인정과 칭찬을 기대. 지속적인 관심과 피드백이 없으면 금방 동기가 떨어짐.</p>
+                    </div>
+                    
+                    <div class="detail-section">
+                        <h2>장점</h2>
+                        <p>작은 일에도 성취감을 느끼고, 외부 인정에 민감해 빠른 반응을 보일 수 있음.</p>
+                    </div>
+                    
+                    <div class="detail-section">
+                        <h2>단점</h2>
+                        <p>지나치게 칭찬을 요구하면 사장의 에너지를 소모시키고, 공정성 이슈를 유발할 수 있음.</p>
+                    </div>
+                    
+                    <div class="detail-section">
+                        <h2>개선점</h2>
+                        <p>성과 기준을 명확히 정하고, 공식적 자리에서 균형 잡힌 칭찬 제공.</p>
+                    </div>
+                    
+                    <div class="detail-section">
+                        <h2>추천하는 대화법</h2>
+                        <p>"성과가 나올 때마다 인정을 할 겁니다. 다만 모든 성과가 똑같이 큰 의미를 갖는 것은 아니에요. 기준에 따라 공정하게 칭찬하겠습니다."</p>
+                    </div>
+                    
+                    <div class="detail-section">
+                        <h2>대처법</h2>
+                        <p>과도한 관심 요구를 '자율 목표 관리'로 전환.
+성과 중심 보상 체계를 강화하고, 인정이 필요한 부분과 아닌 부분을 명확히 구분하여 관리.</p>
+                    </div>
+                </div>
+                
+                <a href="javascript:history.back()" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> 이전으로 돌아가기
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // 모바일 메뉴 토글
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navMenu = document.querySelector('.nav-menu');
+
+            menuToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+            });
+
+            // 네비게이션 메뉴 항목 클릭 시 모바일 메뉴 닫기
+            const navLinks = document.querySelectorAll('.nav-menu a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth <= 992) {
+                        navMenu.classList.remove('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

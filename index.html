@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>중간계 리더십 실전코스 (25년)</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts - Noto Sans KR -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- CORS Anywhere 사용 권한을 미리 얻기 위한 스크립트 -->
+    <script>
+        window.addEventListener('DOMContentLoaded', function() {
+            // CORS Anywhere 서버 접근 권한 요청 (최초 한 번)
+            try {
+                const corsAnywhereUrl = 'https://cors-anywhere.herokuapp.com/';
+                fetch(corsAnywhereUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Origin': window.location.origin
+                    }
+                }).then(response => {
+                    console.log('CORS Anywhere 접근 권한 요청 결과:', response.ok ? '성공' : '실패');
+                }).catch(err => {
+                    console.warn('CORS Anywhere 요청 실패, 다른 방법 사용 필요:', err);
+                });
+            } catch (e) {
+                console.log('CORS 초기화 오류:', e);
+            }
+        });
+    </script>
+</head>
+<body>
+    <!-- 1번째 영역: 네비게이션바 -->
+    <nav id="navbar">
+        <div class="container">
+            <div class="logo">
+                <img src="images/logo/logo_only3.png" alt="중간계캠퍼스 로고">
+            </div>
+            <div class="title">
+                <h1>중간계 리더십 실전코스 (25년)</h1>
+            </div>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#main-banner">홈</a></li>
+                <li><a href="#leadership-type">리더십 유형</a></li>
+                <li><a href="#employee-style">직원 스타일</a></li>
+                <li><a href="#contact">연락처</a></li>
+                <li><button id="chatbot-btn" class="btn">리더십 챗봇</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 2번째 영역: 메인 배너 -->
+    <section id="main-banner" class="section">
+        <div class="banner-bg"></div>
+        <div class="container">
+            <div class="banner-content">
+                <div class="main-logo">
+                    <img src="images/logo/logo_only3.png" alt="중간계캠퍼스 로고" class="banner-logo">
+                </div>
+                <h2 class="main-title">올바른 리더가 회사를 움직인다</h2>
+                <p class="main-description">중간계 리더십 실전코스에서 당신의 리더십을 발견하세요</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3번째 영역: 리더십 유형 -->
+    <section id="leadership-type" class="section card-section">
+        <div class="container">
+            <h2>리더십 유형</h2>
+            
+            <div class="schedule-container">
+                <h3 class="schedule-main-title">리더십 실전 코스 스케줄</h3>
+                <div class="table-responsive">
+                    <table class="schedule-table">
+                        <thead>
+                            <tr>
+                                <th>회차</th>
+                                <th>일정</th>
+                                <th>내용</th>
+                                <th>비고</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1회차</td>
+                                <td>5월 7일 (수)</td>
+                                <td>사장님 리더십 유형 분류<br>나는 어떤 리더인가?</td>
+                                <td>리더십 유형<br>점검 체크리스트</td>
+                            </tr>
+                            <tr>
+                                <td>2회차</td>
+                                <td>5월 21일 (수)</td>
+                                <td>직원과의 갈등<br>원인과 대응책</td>
+                                <td>감정 갈등 vs. 역할 갈등<br>공감 대화법</td>
+                            </tr>
+                            <tr>
+                                <td>3회차</td>
+                                <td>6월 4일 (수)</td>
+                                <td>신뢰와 존중의 피드백</td>
+                                <td>직원 동기와 욕구 이해<br>구조화된 피드백</td>
+                            </tr>
+                            <tr>
+                                <td>4회차</td>
+                                <td>6월 18일 (수)</td>
+                                <td>나만의 리더십 매뉴얼 만들기</td>
+                                <td>나의 행동 원칙 정리<br>팀운영 개선계획</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+
+            
+            <div class="test-button-container">
+                <p class="test-prompt">나의 리더십 유형을 알아보세요.</p>
+                <button id="leadership-test-btn" class="btn btn-large btn-test">나의 리더십 유형은?</button>
+            </div>
+            <div id="leadership-test" class="hidden"></div>
+            <div id="leadership-result" class="hidden">
+                <div class="leadership-types">
+                    <div class="type fade-in">
+                        <h3>엄마형 리더십 <span>🤗</span></h3>
+                        <p><strong>특징:</strong> 따뜻하고 지지적인 성향으로 구성원들의 감정과 복지를 중요시하는 리더십 유형입니다.</p>
+                        <p><strong>강점:</strong> 팀원들의 심리적 안정감을 제공하고 소속감을 강화합니다.</p>
+                        <p><strong>단점:</strong> 때로는 어려운 결정이나 엄격한 방향 제시가 필요할 때 불편함을 느낄 수 있습니다.</p>
+                    </div>
+                    <div class="type fade-in">
+                        <h3>장인형 리더십 <span>🔍</span></h3>
+                        <p><strong>특징:</strong> 정확성과 세부사항을 중시하며 높은 품질 기준을 유지하려는 리더십 유형입니다.</p>
+                        <p><strong>강점:</strong> 깊이 있는 분석과 전문성을 통해 탁월한 결과물을 만들어냅니다.</p>
+                        <p><strong>단점:</strong> 때로는 완벽주의로 인해 의사결정이 지연되거나 팀원의 자율성이 제한될 수 있습니다.</p>
+                    </div>
+                    <div class="type fade-in">
+                        <h3>코치형 리더십 <span>🏆</span></h3>
+                        <p><strong>특징:</strong> 구성원의 성장과 역량 개발에 초점을 맞추는 리더십 유형입니다.</p>
+                        <p><strong>강점:</strong> 팀원의 장기적 발전을 도모하고 자율성과 책임감을 키웁니다.</p>
+                        <p><strong>단점:</strong> 모든 사람이 자기주도적 학습에 적합하지 않을 수 있으며, 즉각적인 결과가 필요한 상황에서는 비효율적일 수 있습니다.</p>
+                    </div>
+                    <div class="type fade-in">
+                        <h3>지휘관형 리더십 <span>🎯</span></h3>
+                        <p><strong>특징:</strong> 명확한 방향 제시와 결과 지향적 접근법을 선호하는 리더십 유형입니다.</p>
+                        <p><strong>강점:</strong> 빠른 의사결정과 목표 달성에 뛰어나며 위기 상황에서 효과적입니다.</p>
+                        <p><strong>단점:</strong> 때로는 구성원들의 감정이나 개인적 상황을 고려하지 못할 수 있습니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4번째 영역: 직원 스타일 -->
+    <section id="employee-style" class="section card-section">
+        <div class="container">
+            <h2>직원 스타일</h2>
+            <div class="test-button-container">
+                <p class="test-prompt">직원들의 스타일을 알아보세요.</p>
+                <button id="employee-style-btn" class="btn btn-large btn-test">직원 스타일 알아보기</button>
+            </div>
+            <div id="employee-styles" class="hidden">
+                <div class="employee-style-container">
+                    <!-- 직원 스타일 카드 템플릿 -->
+                    <template id="employee-style-template">
+                        <div class="employee-style-card fade-in">
+                            <h3></h3>
+                            <div class="style-details">
+                                <div class="style-traits">
+                                    <h4>특징</h4>
+                                    <ul></ul>
+                                </div>
+                                <div class="style-solutions">
+                                    <h4>대처법</h4>
+                                    <ul></ul>
+                                </div>
+                                <button class="view-details-btn">자세히 보기</button>
+                            </div>
+                            <div class="detailed-info hidden">
+                                <h4>상세 분석</h4>
+                                <!-- 상세 정보는 동적으로 추가됨 -->
+                                <button class="close-details-btn">접기</button>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6번째 영역: 챗봇 -->
+    <div id="chatbot-container">
+        <div class="chatbot-header">
+            <h3>리더십 챗봇</h3>
+            <button id="close-chat-btn" type="button">&times;</button>
+        </div>
+        <div class="chat-messages">
+            <div class="message bot">안녕하세요! 직원 리더십과 관련된 고민이 있으신가요?</div>
+            <div class="message bot concern-selector">
+                <p>직원과 관련해 가장 공감되는 고민을 골라주세요.</p>
+                <div class="concern-buttons">
+                    <button class="concern-btn" data-concern="1">직원이 알아서 움직이지 않아요</button>
+                    <button class="concern-btn" data-concern="2">직원이 솔직하게 말하지 않고 눈치만 봐요</button>
+                    <button class="concern-btn" data-concern="3">나를 상사로 존중하지 않는 것 같아요</button>
+                    <button class="concern-btn" data-concern="4">직원 관리에 너무 많은 에너지를 씁니다</button>
+                    <button class="concern-btn" data-concern="5">좋은 직원을 뽑고 유지하는 게 힘들어요</button>
+                    <button class="concern-btn" data-concern="6">중요한 일을 맡기기가 불안해요</button>
+                    <button class="concern-btn" data-concern="7">직원들끼리 갈등이 생기면 해결이 어렵습니다</button>
+                    <button class="concern-btn" data-concern="8">가끔 '내 리더십이 맞는 건가' 회의감이 듭니다</button>
+                </div>
+            </div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="user-input" placeholder="질문을 입력하세요...">
+            <button id="send-btn"><i class="fas fa-paper-plane"></i></button>
+        </div>
+        <div class="chatbot-footer">
+            <button id="show-concerns-btn">다른 고민 보기</button>
+        </div>
+    </div>
+
+    <!-- 7번째 영역: 연락처 -->
+    <section id="contact" class="section">
+        <div class="container">
+            <h2>연락처</h2>
+            <div class="contact-info">
+                <div class="info">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <p>매장주소: 서울시 서초구 논현로 173</p>
+                </div>
+                <div class="info">
+                    <i class="fas fa-phone"></i>
+                    <p>전화번호: 02-6952-9454, 9455</p>
+                </div>
+                <div class="info">
+                    <i class="fas fa-fax"></i>
+                    <p>팩스: 02-6952-9553</p>
+                </div>
+                <div class="info">
+                    <i class="fas fa-envelope"></i>
+                    <p>이메일: midcam31@gmail.com</p>
+                </div>
+            </div>
+            <div class="social-links">
+                <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-blogger"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 플로팅 챗봇 버튼 (상시 고정) -->
+    <div class="floating-chat-btn">
+        <i class="fas fa-comments"></i>
+    </div>
+
+    <script src="script.js"></script>
+    <!-- Debug script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Debug script loaded');
+            
+            // Check if elements exist
+            console.log('Chatbot button exists:', !!document.getElementById('chatbot-btn'));
+            console.log('Floating chat button exists:', !!document.querySelector('.floating-chat-btn'));
+            console.log('Chatbot container exists:', !!document.getElementById('chatbot-container'));
+            
+            // Add direct click handler to buttons within the chatbot
+            const concernBtns = document.querySelectorAll('.concern-btn');
+            concernBtns.forEach(btn => {
+                btn.onclick = function() {
+                    console.log('Direct concern button click:', this.getAttribute('data-concern'), this.textContent);
+                    const concernId = this.getAttribute('data-concern');
+                    // Find the concern in the leadershipConcerns object
+                    if (window.leadershipConcerns && window.leadershipConcerns[concernId]) {
+                        console.log('Found concern:', window.leadershipConcerns[concernId].title);
+                        
+                        // Add user message to chat
+                        const chatMessages = document.querySelector('.chat-messages');
+                        if (chatMessages) {
+                            const userMsg = document.createElement('div');
+                            userMsg.className = 'message user';
+                            userMsg.textContent = this.textContent;
+                            chatMessages.appendChild(userMsg);
+                            
+                            // Scroll to bottom
+                            chatMessages.scrollTop = chatMessages.scrollHeight;
+                            
+                            // Show a response
+                            setTimeout(() => {
+                                const botMsg = document.createElement('div');
+                                botMsg.className = 'message bot';
+                                botMsg.textContent = window.leadershipConcerns[concernId].sympathy;
+                                chatMessages.appendChild(botMsg);
+                                chatMessages.scrollTop = chatMessages.scrollHeight;
+                            }, 500);
+                        }
+                    }
+                };
+            });
+            
+            // Add direct click handler to buttons
+            const chatbotBtn = document.getElementById('chatbot-btn');
+            if (chatbotBtn) {
+                chatbotBtn.addEventListener('click', function() {
+                    console.log('Direct chatbot button click detected');
+                    const container = document.getElementById('chatbot-container');
+                    if (container) {
+                        console.log('Adding visible class');
+                        container.classList.add('visible');
+                        console.log('Container classes after click:', container.className);
+                    }
+                });
+            }
+            
+            const floatingBtn = document.querySelector('.floating-chat-btn');
+            if (floatingBtn) {
+                floatingBtn.addEventListener('click', function() {
+                    console.log('Direct floating button click detected');
+                    const container = document.getElementById('chatbot-container');
+                    if (container) {
+                        console.log('Adding visible class');
+                        container.classList.add('visible');
+                        console.log('Container classes after click:', container.className);
+                    }
+                });
+            }
+            
+            // API 오류 우회를 위한 직접 핸들러 설정
+            const sendBtn = document.getElementById('send-btn');
+            const userInput = document.getElementById('user-input');
+            const chatMessages = document.querySelector('.chat-messages');
+            
+            if (sendBtn && userInput && chatMessages) {
+                // 기존 이벤트 리스너 제거
+                sendBtn.onclick = null;
+                
+                // 직접 이벤트 핸들러 설정
+                sendBtn.onclick = function() {
+                    const message = userInput.value.trim();
+                    if (message === '') return;
+                    
+                    // 사용자 메시지 추가
+                    const userMsg = document.createElement('div');
+                    userMsg.className = 'message user';
+                    userMsg.textContent = message;
+                    chatMessages.appendChild(userMsg);
+                    userInput.value = '';
+                    
+                    // 스크롤 아래로
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                    
+                    // 로딩 메시지
+                    const loadingMsg = document.createElement('div');
+                    loadingMsg.className = 'message bot';
+                    loadingMsg.textContent = '응답을 생성 중입니다...';
+                    chatMessages.appendChild(loadingMsg);
+                    
+                    // 로컬 응답 사용
+                    setTimeout(() => {
+                        // 간단한 응답 로직
+                        let response = "죄송합니다만, 현재 API 연결에 문제가 있어 상세한 답변을 드릴 수 없습니다. 아래 '다른 고민 보기' 버튼을 눌러 미리 준비된 질문을 확인해 주세요.";
+                        
+                        // 일부 키워드 기반 응답
+                        if (message.includes('리더십') || message.includes('관리') || message.includes('직원')) {
+                            response = "효과적인 리더십은 명확한 기대치 설정, 정기적인 피드백, 적절한 권한 위임이 핵심입니다. 더 구체적인 조언이 필요하시면 '다른 고민 보기' 버튼을 통해 선택해 주세요.";
+                        }
+                        
+                        // 답변 표시
+                        loadingMsg.textContent = response;
+                        
+                        // 안내 메시지 추가
+                        setTimeout(() => {
+                            const guideMsg = document.createElement('div');
+                            guideMsg.className = 'message bot';
+                            guideMsg.textContent = "더 구체적인 도움이 필요하시면 아래 \"다른 고민 보기\" 버튼을 눌러 주요 고민 사항을 선택해주세요.";
+                            chatMessages.appendChild(guideMsg);
+                            chatMessages.scrollTop = chatMessages.scrollHeight;
+                        }, 1000);
+                    }, 1500);
+                };
+                
+                // Enter 키 이벤트 처리
+                userInput.onkeypress = function(e) {
+                    if (e.key === 'Enter') {
+                        sendBtn.click();
+                        e.preventDefault();
+                    }
+                };
+            }
+            
+            // 다른 고민 보기 버튼
+            const showConcernsBtn = document.getElementById('show-concerns-btn');
+            if (showConcernsBtn) {
+                showConcernsBtn.onclick = function() {
+                    // 이미 있는 고민 선택기를 제거 (중복 방지)
+                    const existingSelectors = document.querySelectorAll('.message.bot.concern-selector');
+                    existingSelectors.forEach(selector => {
+                        if (selector.parentNode) {
+                            selector.parentNode.removeChild(selector);
+                        }
+                    });
+                    
+                    // 새로운 고민 선택기 HTML 생성
+                    const selectorHtml = `
+                        <div class="message bot concern-selector">
+                            <p>직원과 관련해 가장 공감되는 고민을 골라주세요.</p>
+                            <div class="concern-buttons">
+                                <button class="concern-btn" data-concern="1">직원이 알아서 움직이지 않아요</button>
+                                <button class="concern-btn" data-concern="2">직원이 솔직하게 말하지 않고 눈치만 봐요</button>
+                                <button class="concern-btn" data-concern="3">나를 상사로 존중하지 않는 것 같아요</button>
+                                <button class="concern-btn" data-concern="4">직원 관리에 너무 많은 에너지를 씁니다</button>
+                                <button class="concern-btn" data-concern="5">좋은 직원을 뽑고 유지하는 게 힘들어요</button>
+                                <button class="concern-btn" data-concern="6">중요한 일을 맡기기가 불안해요</button>
+                                <button class="concern-btn" data-concern="7">직원들끼리 갈등이 생기면 해결이 어렵습니다</button>
+                                <button class="concern-btn" data-concern="8">가끔 '내 리더십이 맞는 건가' 회의감이 듭니다</button>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // 고민 선택기 추가
+                    chatMessages.insertAdjacentHTML('beforeend', selectorHtml);
+                    
+                    // 스크롤 아래로
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                    
+                    // 버튼 이벤트 추가
+                    const concernBtns = document.querySelectorAll('.concern-btn');
+                    concernBtns.forEach(btn => {
+                        btn.onclick = function() {
+                            const concernId = this.getAttribute('data-concern');
+                            const title = this.textContent;
+                            
+                            // 사용자 선택 메시지 추가
+                            const userMsg = document.createElement('div');
+                            userMsg.className = 'message user';
+                            userMsg.textContent = title;
+                            chatMessages.appendChild(userMsg);
+                            
+                            // 스크롤 아래로
+                            chatMessages.scrollTop = chatMessages.scrollHeight;
+                            
+                            // 응답 생성
+                            setTimeout(() => {
+                                // 공감 메시지
+                                const sympathyMsg = document.createElement('div');
+                                sympathyMsg.className = 'message bot';
+                                sympathyMsg.textContent = window.leadershipConcerns && window.leadershipConcerns[concernId] ? 
+                                    window.leadershipConcerns[concernId].sympathy : 
+                                    "많은 리더분들이 비슷한 고민을 하고 계십니다.";
+                                chatMessages.appendChild(sympathyMsg);
+                                chatMessages.scrollTop = chatMessages.scrollHeight;
+                                
+                                // 조언 메시지
+                                setTimeout(() => {
+                                    const adviceMsg = document.createElement('div');
+                                    adviceMsg.className = 'message bot';
+                                    adviceMsg.textContent = window.leadershipConcerns && window.leadershipConcerns[concernId] ? 
+                                        window.leadershipConcerns[concernId].advice : 
+                                        "이런 상황에서는 명확한 커뮤니케이션과 일관된 리더십이 중요합니다. 구체적인 기대치를 설정하고 정기적인 피드백을 제공하는 것이 도움이 될 수 있습니다.";
+                                    chatMessages.appendChild(adviceMsg);
+                                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                                }, 1000);
+                            }, 500);
+                        };
+                    });
+                };
+            }
+        });
+    </script>
+</body>
+</html> 

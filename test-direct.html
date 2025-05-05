@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>직접 API 테스트</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        .result { white-space: pre-wrap; border: 1px solid #ddd; padding: 10px; margin-top: 10px; }
+        button { padding: 8px 16px; margin: 5px; }
+    </style>
+</head>
+<body>
+    <h1>직접 API 테스트</h1>
+    
+    <button onclick="testDirectApi()">직접 테스트</button>
+    <div id="loading"></div>
+    <div class="result" id="result"></div>
+    
+    <script>
+        async function testDirectApi() {
+            const result = document.getElementById('result');
+            const loading = document.getElementById('loading');
+            loading.textContent = "로딩 중...";
+            result.textContent = "";
+            
+            try {
+                // 직접 Gemini API 호출
+                const apiKey = "AIzaSyALAtfDLhrBb6SPpDwZoTtO2wUHi4vvgcA";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`;
+                
+                const payload = {
+                    contents: [{
+                        role: "user",
+                        parts: [{
+                            text: "리더십이란 무엇인가요? (한국어로 간략하게 설명해주세요)"
+                        }]
+                    }],
+                    generationConfig: {
+                        temperature: 0.7,
+                        maxOutputTokens: 500,
+                        topP: 0.95,
+                        topK: 40
+                    }
+                };
+                
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+                
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`API 호출 실패: ${response.status} ${response.statusText}\n${errorText}`);
+                }
+                
+                const data = await response.json();
+                
+                // 응답 표시
+                if (data.candidates && data.candidates.length > 0 && 
+                    data.candidates[0].content && 
+                    data.candidates[0].content.parts && 
+                    data.candidates[0].content.parts.length > 0) {
+                    
+                    const responseText = data.candidates[0].content.parts[0].text;
+                    result.textContent = responseText;
+                } else {
+                    result.textContent = "응답 형식이 예상과 다릅니다: " + JSON.stringify(data, null, 2);
+                }
+            } catch (error) {
+                result.textContent = "오류 발생: " + error.message;
+            } finally {
+                loading.textContent = "";
+            }
+        }
+    </script>
+</body>
+</html> 

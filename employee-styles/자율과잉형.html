@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자율 과잉형 직원 스타일 - 중간계 리더십 실전코스</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .employee-detail-page {
+            padding: 30px 0;
+        }
+        .employee-detail-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        .employee-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .employee-title h1 {
+            font-size: 28px;
+            margin-right: 10px;
+        }
+        .employee-title span {
+            font-size: 36px;
+        }
+        .detail-content {
+            margin-bottom: 30px;
+        }
+        .detail-section {
+            margin-bottom: 20px;
+        }
+        .detail-section h2 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: #2180de;
+            border-bottom: 2px solid #2180de;
+            padding-bottom: 5px;
+        }
+        .detail-section p {
+            line-height: 1.6;
+        }
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #2180de;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .back-btn:hover {
+            background-color: #1a6eb8;
+        }
+    </style>
+</head>
+<body>
+    <!-- 네비게이션바 -->
+    <nav id="navbar">
+        <div class="container">
+            <div class="logo">
+                <img src="../images/logo/logo_only3.png" alt="중간계캠퍼스 로고">
+            </div>
+            <div class="title">
+                <h1>중간계 리더십 실전코스 (25년)</h1>
+            </div>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../index.html#main-banner">홈</a></li>
+                <li><a href="../index.html#leadership-type">리더십 유형</a></li>
+                <li><a href="../index.html#employee-style">직원 스타일</a></li>
+                <li><a href="../index.html#contact">연락처</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 직원 상세 정보 -->
+    <section class="employee-detail-page">
+        <div class="container">
+            <div class="employee-detail-container">
+                <div class="employee-title">
+                    <h1>자율 과잉형</h1>
+                    <span>🦅</span>
+                </div>
+                
+                <div class="detail-content">
+                    <div class="detail-section">
+                        <h2>특성</h2>
+                        <p>규정보다 자기 방식, 지시보다 자신의 스타일을 우선시함.</p>
+                    </div>
+                    
+                    <div class="detail-section">
+                        <h2>장점</h2>
+                        <p>창의적 아이디어와 유연한 문제 해결력을 지님.</p>
+                    </div>
+                    
+                    <div class="detail-section">
+                        <h2>단점</h2>
+                        <p>조직 규율을 무너뜨리고, 통제 불가 상황을 만들 수 있음.</p>
+                    </div>
+                    
+                    <div class="detail-section">
+                        <h2>개선점</h2>
+                        <p>초기에 규칙과 재량 범위를 명확히 정하고, 결과 책임을 강화.</p>
+                    </div>
+                    
+                    <div class="detail-section">
+                        <h2>추천하는 대화법</h2>
+                        <p>"당신의 자율성을 존중합니다. 다만, 자유에는 책임이 따릅니다. 정해진 규칙 안에서 창의적으로 움직여주세요."</p>
+                    </div>
+                    
+                    <div class="detail-section">
+                        <h2>대처법</h2>
+                        <p>성과와 책임을 연결. 자유 권한은 단계별로 부여하며, 규정 준수 여부를 지속 체크.</p>
+                    </div>
+                </div>
+                
+                <a href="javascript:history.back()" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> 이전으로 돌아가기
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // 모바일 메뉴 토글
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navMenu = document.querySelector('.nav-menu');
+
+            menuToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+            });
+
+            // 네비게이션 메뉴 항목 클릭 시 모바일 메뉴 닫기
+            const navLinks = document.querySelectorAll('.nav-menu a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth <= 992) {
+                        navMenu.classList.remove('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html> 
