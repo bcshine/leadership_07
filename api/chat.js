@@ -13,16 +13,31 @@ module.exports = async (req, res) => {
 
   // OPTIONS 요청 처리
   if (req.method === 'OPTIONS') {
+    console.log('OPTIONS 요청 처리');
     res.status(200).end();
     return;
   }
 
   // POST 요청만 처리
   if (req.method !== 'POST') {
+    console.error(`지원하지 않는 HTTP 메서드: ${req.method}`);
     return res.status(405).json({ success: false, error: 'Method Not Allowed' });
   }
 
+  console.log('chat.js 서버리스 함수 호출됨');
+  console.log('요청 헤더:', req.headers);
+  console.log('요청 본문:', req.body);
+  
   const { message } = req.body;
+  
+  if (!message) {
+    console.error('메시지 누락됨');
+    return res.status(400).json({ 
+      success: false, 
+      error: '요청에 메시지가 없습니다',
+      details: { receivedBody: req.body }
+    });
+  }
   
   console.log('클라이언트로부터 메시지 수신:', message);
 
@@ -46,18 +61,19 @@ module.exports = async (req, res) => {
     
     // OpenAI API 호출
     const response = await axios.post('https://api.openai.com/v1/chat/completions', {
-      model: "gpt-4",
+      model: "gpt-3.5-turbo",
       messages: [
         systemMessage,
         { role: "user", content: message }
       ],
       temperature: 0.7,
-      max_tokens: 1000
+      max_tokens: 300
     }, {
       headers: {
         Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
         'Content-Type': 'application/json'
-      }
+      },
+      timeout: 10000
     });
 
     console.log('OpenAI API로부터 응답 수신');
@@ -75,7 +91,7 @@ module.exports = async (req, res) => {
     res.status(500).json({
       success: false,
       error: 'OpenAI API 호출 중 오류가 발생했습니다',
-      details: error.response ? error.response.data : error.message
+      details: error.response ? error.response.data : { message: error.message }
     });
   }
 }; 
